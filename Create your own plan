@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Emergency Plan</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Family Emergency Plan</h1>
+        <form id="emergencyPlanForm">
+            <label for="contactName">Emergency Contact Name:</label>
+            <input type="text" id="contactName" name="contactName" required>
+
+            <label for="contactPhone">Emergency Contact Phone Number:</label>
+            <input type="tel" id="contactPhone" name="contactPhone" required>
+
+            <label for="meetingPlace">Family Meeting Place:</label>
+            <input type="text" id="meetingPlace" name="meetingPlace" required>
+
+            <label for="evacuationPlan">Evacuation Plan Details:</label>
+            <textarea id="evacuationPlan" name="evacuationPlan" rows="4" required></textarea>
+
+            <button type="button" onclick="generatePlan()">Generate Emergency Plan</button>
+            <button type="button" onclick="downloadPlan()">Download Plan</button>
+        </form>
+        <div id="generatedPlan" style="display:none; margin-top: 20px;">
+            <h2>Your Emergency Plan</h2>
+            <p id="planOutput"></p>
+        </div>
+    </div>
+    <script>
+        function generatePlan() {
+            const contactName = document.getElementById('contactName').value;
+            const contactPhone = document.getElementById('contactPhone').value;
+            const meetingPlace = document.getElementById('meetingPlace').value;
+            const evacuationPlan = document.getElementById('evacuationPlan').value;
+
+            const planOutput = `
+                <strong>Emergency Contact Name:</strong> ${contactName}<br>
+                <strong>Emergency Contact Phone Number:</strong> ${contactPhone}<br>
+                <strong>Family Meeting Place:</strong> ${meetingPlace}<br>
+                <strong>Evacuation Plan:</strong> ${evacuationPlan}
+            `;
+
+            document.getElementById('planOutput').innerHTML = planOutput;
+            document.getElementById('generatedPlan').style.display = 'block';
+        }
+
+        function downloadPlan() {
+            const contactName = document.getElementById('contactName').value;
+            const contactPhone = document.getElementById('contactPhone').value;
+            const meetingPlace = document.getElementById('meetingPlace').value;
+            const evacuationPlan = document.getElementById('evacuationPlan').value;
+
+            const planText = `
+Family Emergency Plan
+----------------------
+
+Emergency Contact Name: ${contactName}
+Emergency Contact Phone Number: ${contactPhone}
+Family Meeting Place: ${meetingPlace}
+Evacuation Plan: ${evacuationPlan}
+            `;
+
+            const blob = new Blob([planText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Family_Emergency_Plan.txt';
+            link.click();
+        }
+    </script>
+</body>
+</html>
